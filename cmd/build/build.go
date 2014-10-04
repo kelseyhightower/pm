@@ -12,6 +12,7 @@ import (
 	"io/ioutil"
 	"log"
 	"os"
+	"path/filepath"
 	"time"
 
 	"code.google.com/p/go.crypto/openpgp"
@@ -67,6 +68,14 @@ func createPackage(binaryFilePath string, m *metadata.Metadata) error {
 	log.Println(name + ".sha256")
 	checksumContents := fmt.Sprintf("%x  %s\n", sha256.Sum256(data), name)
 	checksumFile.WriteString(checksumContents)
+	// write the checksum of the binary file.
+	binaryFileData, err := ioutil.ReadFile(binaryFilePath)
+	if err != nil {
+		return err
+	}
+	checksumContents = fmt.Sprintf("%x  %s\n", sha256.Sum256(binaryFileData), filepath.Base(binaryFilePath))
+	checksumFile.WriteString(checksumContents)
+
 	// Setup the openpgp keyrign. Right now we only support non-encrypted private
 	// keys.
 	f, err := os.Open(privateKeyFilePath)

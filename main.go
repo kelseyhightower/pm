@@ -7,6 +7,7 @@ import (
 
 	"github.com/kelseyhightower/pm/cmd/build"
 	"github.com/kelseyhightower/pm/cmd/get"
+	"github.com/kelseyhightower/pm/cmd/info"
 	"github.com/kelseyhightower/pm/cmd/install"
 	"github.com/kelseyhightower/pm/cmd/list"
 	"github.com/kelseyhightower/pm/cmd/remove"
@@ -28,6 +29,8 @@ func main() {
 		remove.Run()
 	case "list":
 		list.Run()
+	case "info":
+		info.Run()
 	default:
 		fmt.Println("not a command")
 	}
